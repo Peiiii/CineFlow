@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>CineFlow AI - Cinematic Studio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,26 +16,30 @@
         overflow: hidden;
         color: #1A1A1A;
         -webkit-font-smoothing: antialiased;
+        touch-action: none; /* 禁用系统手势，由应用接管 */
       }
       .glass-card {
-        background: rgba(255, 255, 255, 0.6);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
       }
-      .canvas-grid {
-        background-image: radial-gradient(#E5E7EB 0.8px, transparent 0.8px);
-        background-size: 24px 24px;
+      .canvas-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background-color: #F9FAFB;
+      }
+      .dynamic-grid {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(#E2E8F0 1.2px, transparent 1.2px);
+        pointer-events: none;
       }
       .soft-shadow {
-        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04);
+        box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.04);
       }
       .active-shadow {
-        box-shadow: 0 20px 40px -15px rgba(59, 130, 246, 0.15);
-      }
-      /* 优化选中动画 */
-      .asset-transition {
-        transition: transform 0.2s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.2s ease;
+        box-shadow: 0 20px 40px -12px rgba(59, 130, 246, 0.12);
       }
     </style>
     <script type="importmap">

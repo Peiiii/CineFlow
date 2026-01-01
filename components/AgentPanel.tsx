@@ -48,8 +48,8 @@ const AgentPanel: React.FC<AgentPanelProps> = ({ selectedAssets, onAddAsset }) =
   };
 
   return (
-    <div className="w-[440px] h-[calc(100vh-48px)] m-6 flex flex-col bg-white rounded-[32px] border border-gray-100 soft-shadow z-50">
-      <div className="px-8 py-6 flex items-center justify-between">
+    <div className="w-[440px] flex-shrink-0 h-[calc(100vh-48px)] m-6 flex flex-col bg-white rounded-[32px] border border-gray-100 soft-shadow z-50 overflow-hidden">
+      <div className="px-8 py-6 flex items-center justify-between bg-white border-b border-gray-50">
         <div>
           <h2 className="text-[15px] font-bold text-gray-900 tracking-tight">Studio Agent</h2>
           <span className="text-[10px] text-blue-500 font-black uppercase tracking-[0.15em]">{selectedAssets.length} Context Items</span>
@@ -63,11 +63,11 @@ const AgentPanel: React.FC<AgentPanelProps> = ({ selectedAssets, onAddAsset }) =
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-8 py-2 space-y-6" ref={scrollRef}>
+      <div className="flex-1 overflow-y-auto px-8 py-6 space-y-6 bg-[#FAFBFC]/30" ref={scrollRef}>
         {messages.map(msg => (
           <div key={msg.id} className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}>
             <div className={`max-w-[85%] rounded-[20px] px-5 py-3.5 text-sm leading-[1.6] ${
-              msg.role === 'user' ? 'bg-[#121212] text-white' : 'bg-[#F3F4F6] text-gray-800'
+              msg.role === 'user' ? 'bg-[#121212] text-white' : 'bg-white border border-gray-100 text-gray-800 shadow-sm'
             }`}>
               {msg.text}
             </div>
@@ -79,7 +79,7 @@ const AgentPanel: React.FC<AgentPanelProps> = ({ selectedAssets, onAddAsset }) =
         {loading && <div className="flex gap-1.5 p-2"><div className="w-1 h-1 bg-blue-500 rounded-full animate-bounce" /><div className="w-1 h-1 bg-blue-500 rounded-full animate-bounce [animation-delay:0.2s]" /><div className="w-1 h-1 bg-blue-500 rounded-full animate-bounce [animation-delay:0.4s]" /></div>}
       </div>
 
-      <div className="p-6">
+      <div className="p-6 bg-white border-t border-gray-50">
         <div className="bg-[#F9FAFB] rounded-[24px] border border-gray-200/60 p-2">
           <textarea
             value={input}
