@@ -1,0 +1,8 @@
+{
+  "name": "CineFlow AI - Film Production Studio",
+  "description": "An infinite canvas-based AI film-making platform where prompts, images, and videos are managed as assets. Orchestrate your cinematic vision with a powerful AI agent and a flexible context-aware workspace.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
