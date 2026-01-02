@@ -18,14 +18,14 @@ const tools = [
 const Sidebar: React.FC<SidebarProps> = ({ onToolClick }) => {
   return (
     <div className="fixed left-6 top-1/2 -translate-y-1/2 z-50">
-      <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgba(0,0,0,0.06)] border border-gray-100 p-2 flex flex-col gap-2">
+      <div className="bg-white rounded-[28px] lovart-card-shadow border border-gray-100 p-1.5 flex flex-col gap-1">
         {tools.map((t) => (
           <button
             key={t.id}
             onClick={() => onToolClick?.(t.id)}
-            className="w-11 h-11 flex items-center justify-center rounded-xl hover:bg-gray-50 text-gray-400 hover:text-gray-900 transition-all active:scale-95"
+            className="w-11 h-11 flex items-center justify-center rounded-[18px] text-gray-400 hover:text-black hover:bg-gray-50 compact-transition active:scale-90"
           >
-            <svg className="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+            <svg className="w-[20px] h-[20px] thin-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d={t.icon} />
             </svg>
           </button>
