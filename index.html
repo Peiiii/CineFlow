@@ -8,40 +8,63 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
       body {
         font-family: 'Inter', sans-serif;
-        background-color: #F8F9FA;
-        overflow: hidden;
+        background-color: #FBFBFB;
         color: #1A1A1A;
         -webkit-font-smoothing: antialiased;
       }
-      .lovart-input-bg {
-        background-color: #F3F4F6;
+      
+      /* 彻底清除默认样式 */
+      textarea, input, button {
+        outline: none !important;
+        -webkit-tap-highlight-color: transparent;
       }
-      .lovart-panel-shadow {
-        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04);
+      textarea {
+        resize: none !important;
       }
-      .lovart-card-shadow {
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
+      
+      /* Lovart 标准交互按钮：圆角矩形背景反馈 */
+      .lov-action-btn {
+        @apply flex items-center justify-center transition-all duration-200 select-none rounded-[10px] text-[#888] hover:text-black hover:bg-black/5 active:scale-95;
+        width: 36px;
+        height: 36px;
       }
-      .custom-scroll::-webkit-scrollbar {
-        width: 3px;
+      
+      .lov-action-btn-sm {
+        @apply lov-action-btn;
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
       }
-      .custom-scroll::-webkit-scrollbar-thumb {
-        background: #E5E7EB;
-        border-radius: 10px;
+
+      .lov-action-btn-active {
+        @apply bg-[#E9F2FF] text-[#0066FF] hover:bg-[#D9E9FF] hover:text-[#0055DD];
       }
-      .thin-icon {
-        stroke-width: 1.3;
+
+      /* 输入面板：容器感 */
+      .lov-input-panel {
+        @apply bg-[#F4F4F5] rounded-[24px] p-4 border border-transparent transition-all duration-300;
       }
+      .lov-input-panel:focus-within {
+        @apply bg-[#ECECEE] border-black/5 shadow-sm;
+      }
+
+      .border-v { border-left: 1px solid #F0F0F0; }
+      .border-h { border-bottom: 1px solid #F0F0F0; }
+      .thin-icon { stroke-width: 1.35; }
+      
+      .custom-scroll::-webkit-scrollbar { width: 4px; }
+      .custom-scroll::-webkit-scrollbar-thumb { background: #E5E5E5; border-radius: 10px; }
+      
       .canvas-container {
-        background-image: radial-gradient(#E5E7EB 0.8px, transparent 0.8px);
+        background-image: radial-gradient(#E8E8E8 0.75px, transparent 0.75px);
         background-size: 24px 24px;
-      }
-      .compact-transition {
-        @apply transition-all duration-200 ease-out;
+        position: relative;
+        width: 100%;
+        height: 100%;
       }
     </style>
   <script type="importmap">
@@ -50,7 +73,8 @@
     "react": "https://esm.sh/react@^19.2.3",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
     "react/": "https://esm.sh/react@^19.2.3/",
-    "@google/genai": "https://esm.sh/@google/genai@^1.34.0"
+    "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
+    "zustand": "https://esm.sh/zustand@^5.0.3"
   }
 }
 </script>
