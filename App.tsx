@@ -19,7 +19,12 @@ const AppContent: React.FC = () => {
       {/* 顶部导航 */}
       <header className="fixed top-0 left-0 right-[400px] h-[100px] flex items-center justify-between px-16 z-40 pointer-events-none">
         <ProjectHeader />
-        <ZoomControls zoom={zoom} onZoom={workspaceManager.adjustZoom} />
+        <ZoomControls 
+          zoom={zoom} 
+          onZoom={workspaceManager.adjustZoom} 
+          onReset={workspaceManager.resetZoom}
+          onFit={workspaceManager.fitToView}
+        />
       </header>
 
       <main className="flex-1 relative">
