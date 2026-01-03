@@ -3,13 +3,13 @@ import React, { useState } from 'react';
 import { usePresenter } from '../PresenterContext';
 
 const tools = [
-  { id: 'cursor', title: '选择工具', icon: 'M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5' },
-  { id: 'plus', title: '添加资产', icon: 'M12 4v16m8-8H4' },
-  { id: 'square', title: '矩形选区', icon: 'M4 4h16v16H4z' },
-  { id: 'text', title: '文字说明', icon: 'M4 7V4h16v3M9 20h6M12 4v16' },
-  { id: 'pen', title: '自由涂鸦', icon: 'M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z' },
-  { id: 'image', title: '上传图片', icon: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z' },
-  { id: 'play', title: '预览电影', icon: 'M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z' }
+  { id: 'cursor', title: '选择', icon: 'M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5' },
+  { id: 'plus', title: '新增', icon: 'M12 4v16m8-8H4' },
+  { id: 'square', title: '矩形', icon: 'M4 4h16v16H4z' },
+  { id: 'text', title: '文本', icon: 'M4 7V4h16v3M9 20h6M12 4v16' },
+  { id: 'pen', title: '画笔', icon: 'M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z' },
+  { id: 'image', title: '素材', icon: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z' },
+  { id: 'play', title: '放映', icon: 'M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z' }
 ];
 
 const Sidebar: React.FC = () => {
@@ -18,7 +18,7 @@ const Sidebar: React.FC = () => {
 
   return (
     <div className="fixed left-8 top-1/2 -translate-y-1/2 z-50">
-      <div className="bg-white/95 backdrop-blur-2xl rounded-[28px] border border-gray-100 p-2 flex flex-col gap-1.5 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+      <div className="bg-white rounded-full border border-gray-100/50 p-2.5 flex flex-col gap-3 shadow-[0_8px_30px_rgba(0,0,0,0.03)]">
         {tools.map((t) => (
           <button
             key={t.id}
@@ -27,9 +27,13 @@ const Sidebar: React.FC = () => {
               setActiveTool(t.id);
               if (t.id === 'plus') workspaceManager.addAsset({});
             }}
-            className={`lov-action-btn ${activeTool === t.id ? 'lov-action-btn-active' : ''}`}
+            className={`w-10 h-10 icon-center rounded-full transition-all duration-200 group relative ${
+              activeTool === t.id 
+                ? 'bg-black text-white shadow-lg' 
+                : 'text-[#A0A0A0] hover:bg-[#F2F2F2] hover:text-black active:scale-90'
+            }`}
           >
-            <svg className="w-[20px] h-[20px] thin-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.8">
               <path strokeLinecap="round" strokeLinejoin="round" d={t.icon} />
             </svg>
           </button>

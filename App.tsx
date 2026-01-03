@@ -11,53 +11,51 @@ const AppContent: React.FC = () => {
   const zoom = useWorkspaceStore(s => s.zoom);
 
   return (
-    <div className="flex h-screen w-screen bg-[#FBFBFB] overflow-hidden text-[#1A1A1A]">
-      {/* 顶部导航 */}
-      <header className="fixed top-0 left-0 right-[440px] h-16 flex items-center justify-between px-10 z-40 pointer-events-none">
-        <div className="flex items-center gap-4 pointer-events-auto">
-          <div className="w-9 h-9 bg-black rounded-[12px] flex items-center justify-center text-white shadow-sm">
-            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
+    <div className="flex h-screen w-screen bg-[#FFFFFF] overflow-hidden text-black">
+      {/* 顶部导航 - 匹配截图 */}
+      <header className="fixed top-0 left-0 right-[520px] h-[110px] flex items-center justify-between px-16 z-40 pointer-events-none">
+        <div className="flex items-center gap-4 pointer-events-auto group cursor-pointer hover:bg-[#F8F8F8] px-4 py-2.5 rounded-[20px] transition-colors">
+          <div className="w-[44px] h-[44px] bg-black rounded-[15px] icon-center text-white shadow-xl shadow-black/20">
+             <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg>
           </div>
-          <div className="flex items-center gap-1.5 cursor-pointer group hover:bg-black/5 px-3 py-1.5 rounded-[12px] transition-all pointer-events-auto">
-            <h1 className="text-[14px] font-bold tracking-tight">CineFlow Cinematic Project</h1>
-            <svg className="w-3.5 h-3.5 text-gray-300 group-hover:text-black transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5"><path d="M19 9l-7 7-7-7"/></svg>
+          <div className="flex items-center gap-2.5">
+            <h1 className="text-[18px] font-black tracking-tight">未命名项目</h1>
+            <svg className="w-5 h-5 text-[#D4D4D4]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3"><path d="M19 9l-7 7-7-7"/></svg>
           </div>
         </div>
         
-        <div className="flex items-center gap-2 pointer-events-auto bg-white/95 backdrop-blur-xl rounded-full px-4 py-1.5 border border-gray-100 shadow-[0_2px_15px_rgb(0,0,0,0.02)] h-10">
-          <button onClick={() => workspaceManager.adjustZoom(-5)} title="缩小" className="lov-action-btn-sm text-lg font-light">-</button>
-          <span className="text-[12px] font-bold text-black min-w-[36px] text-center select-none">{zoom}%</span>
-          <button onClick={() => workspaceManager.adjustZoom(5)} title="放大" className="lov-action-btn-sm text-lg font-light">+</button>
+        {/* 缩放控制器 - 极简胶囊 */}
+        <div className="flex items-center bg-white rounded-full px-2.5 py-2 border border-gray-100 shadow-[0_10px_40px_rgba(0,0,0,0.04)] h-[56px] pointer-events-auto">
+          <button onClick={() => workspaceManager.adjustZoom(-5)} className="w-10 h-10 icon-center rounded-full text-black hover:bg-gray-50 font-black text-2xl transition-colors">−</button>
+          <span className="text-[15px] font-black text-black min-w-[68px] text-center select-none tracking-tight">{zoom}%</span>
+          <button onClick={() => workspaceManager.adjustZoom(5)} className="w-10 h-10 icon-center rounded-full text-black hover:bg-gray-50 font-black text-2xl transition-colors">+</button>
         </div>
       </header>
 
       <main className="flex-1 relative">
         <Sidebar />
         <Canvas />
+        
+        {/* 画布中心占位：Clapperboard + READY TO SHOOT */}
+        <div className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none flex flex-col items-center">
+          <div className="w-[420px] h-[420px] text-[#F5F5F5] relative flex items-center justify-center">
+            <svg className="w-full h-full" fill="currentColor" viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg>
+            
+            {/* 叠层卡片效果 */}
+            <div className="absolute top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[155px] bg-gradient-to-br from-[#FF9D4D] via-[#BD5AFF] to-[#00C2FF] rounded-[28px] shadow-2xl shadow-blue-500/10 border-[3.5px] border-white/50" />
+          </div>
+          <p className="text-center font-black tracking-[1em] -mt-8 text-[#EBEBEB] text-[19px] uppercase">Ready to shoot</p>
+        </div>
       </main>
 
       <AgentPanel />
-      
-      {/* 左下角状态栏 - 高精度 Lovart 对齐 */}
-      <div className="fixed bottom-10 left-10 flex items-center gap-3 z-40">
-        <button title="主菜单" className="lov-action-btn bg-white border border-gray-100 shadow-sm hover:shadow-md h-[40px] w-[40px] rounded-[14px]">
-          <svg className="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.8">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-          </svg>
-        </button>
 
-        <div className="flex items-center gap-2.5">
-          <div title="个人中心" className="w-[40px] h-[40px] rounded-full bg-white border border-gray-100 shadow-sm flex items-center justify-center overflow-hidden hover:bg-black/5 transition-colors cursor-pointer active:scale-95">
-             <span className="text-[14px] font-bold text-gray-800">W</span>
-          </div>
-          <div title="计算额度" className="h-[40px] bg-white border border-gray-100 shadow-sm rounded-full flex items-center px-5 gap-2.5 hover:bg-black/5 transition-all cursor-pointer active:scale-95">
-             <svg className="w-[15px] h-[15px] text-orange-400 fill-current" viewBox="0 0 20 20">
-               <path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.381z"/>
-             </svg>
-             <span className="text-[14px] font-bold tracking-tight text-gray-900">88</span>
-          </div>
-        </div>
-      </div>
+      {/* 底部功能栏 */}
+      <footer className="fixed bottom-0 left-0 right-0 h-16 pointer-events-none flex items-center justify-end px-16 z-40 pb-4">
+        <button className="w-11 h-11 bg-white border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.06)] rounded-[14px] icon-center pointer-events-auto hover:bg-gray-50 transition-colors">
+          <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5"><path d="M4.5 15.75l7.5-7.5 7.5 7.5" /></svg>
+        </button>
+      </footer>
     </div>
   );
 };

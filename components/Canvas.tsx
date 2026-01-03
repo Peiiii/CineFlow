@@ -73,18 +73,9 @@ const Canvas: React.FC = () => {
   return (
     <div 
       ref={containerRef}
-      className={`canvas-container overflow-hidden select-none ${isPanning ? 'cursor-grabbing' : 'cursor-auto'}`}
+      className={`canvas-dots w-full h-full overflow-hidden select-none relative ${isPanning ? 'cursor-grabbing' : 'cursor-auto'}`}
       onClick={() => workspaceManager.selectAsset('', false)}
     >
-      <div 
-        className="dynamic-grid absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `radial-gradient(#E8E8E8 0.75px, transparent 0.75px)`,
-          backgroundSize: `${24 * scale}px ${24 * scale}px`,
-          backgroundPosition: `${canvasOffset.x}px ${canvasOffset.y}px`
-        }}
-      />
-
       <div 
         className="absolute inset-0 pointer-events-none"
         style={{ 
@@ -95,8 +86,8 @@ const Canvas: React.FC = () => {
         {assets.map((asset) => (
           <div
             key={asset.id}
-            className={`absolute pointer-events-auto rounded-[28px] overflow-hidden bg-white/40 backdrop-blur-lg border border-white/60 transition-shadow duration-200 ${
-              selectedIds.includes(asset.id) ? 'ring-2 ring-blue-500/50 shadow-2xl z-20' : 'z-10 shadow-sm'
+            className={`asset-card absolute pointer-events-auto rounded-[32px] overflow-hidden bg-white shadow-[0_10px_40px_rgba(0,0,0,0.03)] border-2 transition-all duration-300 ${
+              selectedIds.includes(asset.id) ? 'border-black shadow-2xl z-40 scale-[1.02]' : 'border-white/50 z-10 hover:border-gray-200'
             }`}
             style={{ left: asset.position.x, top: asset.position.y, width: asset.width, height: asset.height }}
             onMouseDown={(e) => handleMouseDown(e, asset)}
@@ -105,15 +96,15 @@ const Canvas: React.FC = () => {
               <img src={asset.content} className="w-full h-full object-cover pointer-events-none" />
             )}
             {(asset.type === AssetType.TEXT || asset.type === AssetType.CHARACTER || asset.type === AssetType.SCENE) && (
-              <div className="p-7 flex flex-col justify-between h-full">
+              <div className="p-8 flex flex-col justify-between h-full">
                 <div>
-                  <div className="flex items-center gap-2 mb-4">
-                    <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{asset.type}</span>
+                  <div className="flex items-center gap-2.5 mb-5">
+                    <div className="w-2 h-2 rounded-full bg-black" />
+                    <span className="text-[11px] font-black text-gray-300 uppercase tracking-widest">{asset.type}</span>
                   </div>
-                  <h4 className="text-[14px] font-bold text-gray-900 mb-2">{asset.title}</h4>
+                  <h4 className="text-[16px] font-black text-black mb-3">{asset.title}</h4>
                 </div>
-                <p className="text-[12px] text-gray-500 leading-relaxed line-clamp-4">{asset.content}</p>
+                <p className="text-[13px] text-gray-400 font-medium leading-relaxed line-clamp-4">{asset.content}</p>
               </div>
             )}
           </div>
