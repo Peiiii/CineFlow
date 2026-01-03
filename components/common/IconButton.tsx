@@ -15,6 +15,7 @@ interface IconButtonProps {
   rounded?: IconButtonRounded;
   size?: IconButtonSize;
   disabled?: boolean;
+  tooltipSide?: 'top' | 'bottom' | 'left' | 'right';
 }
 
 const IconButton: React.FC<IconButtonProps> = ({
@@ -26,12 +27,11 @@ const IconButton: React.FC<IconButtonProps> = ({
   variant = 'ghost',
   rounded = 'full',
   size = 'md',
-  disabled
+  disabled,
+  tooltipSide = 'top'
 }) => {
-  // 基础样式
-  const baseClasses = "lov-btn icon-center transition-all duration-300 select-none flex-shrink-0";
+  const baseClasses = "lov-btn icon-center transition-all duration-300 select-none flex-shrink-0 group relative";
   
-  // 变体映射
   const variants = {
     ghost: "text-[#9BA3AF] hover:text-black hover:bg-gray-100/80",
     solid: "bg-black text-white shadow-lg shadow-black/10 active:scale-95 hover:bg-zinc-800",
@@ -42,7 +42,6 @@ const IconButton: React.FC<IconButtonProps> = ({
     subtle: "bg-white border border-gray-100 shadow-[0_8px_25px_rgba(0,0,0,0.06)] hover:bg-gray-50 active:scale-95"
   };
 
-  // 尺寸映射
   const sizes = {
     sm: "w-8 h-8",
     md: "w-9 h-9",
@@ -50,7 +49,6 @@ const IconButton: React.FC<IconButtonProps> = ({
     xl: "w-11 h-11"
   };
 
-  // 圆角映射
   const radius = {
     full: "rounded-full",
     '10': "rounded-[10px]",
@@ -58,9 +56,16 @@ const IconButton: React.FC<IconButtonProps> = ({
     '14': "rounded-[14px]"
   };
 
+  // Tooltip 位置逻辑
+  const tooltipPos = {
+    top: "bottom-full mb-2 left-1/2 -translate-x-1/2",
+    bottom: "top-full mt-2 left-1/2 -translate-x-1/2",
+    left: "right-full mr-2 top-1/2 -translate-y-1/2",
+    right: "left-full ml-2 top-1/2 -translate-y-1/2"
+  };
+
   return (
     <button
-      title={title}
       onClick={onClick}
       disabled={disabled}
       className={`
@@ -72,10 +77,28 @@ const IconButton: React.FC<IconButtonProps> = ({
         ${disabled ? 'opacity-40 cursor-not-allowed' : ''}
       `}
     >
-      {/* 自动处理 Icon 容器，确保内部居中 */}
       <span className="flex items-center justify-center pointer-events-none">
         {icon}
       </span>
+
+      {/* 自定义 Tooltip */}
+      {title && (
+        <div className={`
+          absolute ${tooltipPos[tooltipSide]}
+          px-2 py-1 bg-black text-white text-[10px] font-bold rounded-md
+          opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0
+          transition-all duration-200 pointer-events-none whitespace-nowrap z-[100]
+          shadow-xl
+        `}>
+          {title}
+          {/* 小三角 */}
+          <div className={`
+            absolute w-1.5 h-1.5 bg-black rotate-45
+            ${tooltipSide === 'top' ? 'top-full -mt-[3px] left-1/2 -translate-x-1/2' : ''}
+            ${tooltipSide === 'bottom' ? 'bottom-full -mb-[3px] left-1/2 -translate-x-1/2' : ''}
+          `} />
+        </div>
+      )}
     </button>
   );
 };

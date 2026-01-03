@@ -18,24 +18,30 @@ const AgentPanel: React.FC = () => {
   }, [messages, loading]);
 
   return (
-    <div className="w-[400px] h-screen bg-white flex flex-col z-50 rounded-l-[40px] shadow-[-20px_0_60px_rgba(0,0,0,0.02)] relative border-l border-gray-50">
+    <div className="w-[380px] h-screen bg-white flex flex-col z-50 rounded-l-[32px] shadow-[-20px_0_60px_rgba(0,0,0,0.02)] relative border-l border-gray-50">
       <AgentHeader />
 
-      <div className="flex-1 overflow-y-auto no-scrollbar px-8 pb-4" ref={scrollRef}>
+      <div className="flex-1 overflow-y-auto no-scrollbar px-5 pb-4" ref={scrollRef}>
         {messages.length === 0 ? (
           <AgentWelcome />
         ) : (
-          <div className="space-y-6 py-4">
+          <div className="space-y-4 py-2">
             {messages.map(msg => (
-              <div key={msg.id} className={`flex gap-4 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
-                <div className={`w-9 h-9 rounded-full icon-center flex-shrink-0 text-[12px] font-black border border-gray-100 ${msg.role === 'user' ? 'bg-[#F2F2F2] text-gray-400' : 'bg-black text-white'}`}>
+              <div key={msg.id} className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
+                <div className={`w-8 h-8 rounded-full icon-center flex-shrink-0 text-[10px] font-black border border-gray-100 ${msg.role === 'user' ? 'bg-[#F2F2F2] text-gray-400' : 'bg-black text-white'}`}>
                   {msg.role === 'user' ? 'U' : 'AI'}
                 </div>
-                <div className={`max-w-[85%] text-[14px] leading-relaxed text-[#1A1A1A] font-medium ${msg.role === 'user' ? 'bg-[#F4F4F5] px-5 py-4 rounded-[20px]' : 'py-2'}`}>
+                <div className={`max-w-[88%] text-[13.5px] leading-relaxed text-[#1A1A1A] font-medium ${msg.role === 'user' ? 'bg-[#F4F4F5] px-4 py-3 rounded-[18px]' : 'py-1.5'}`}>
                   {msg.text}
                 </div>
               </div>
             ))}
+            {loading && (
+              <div className="flex gap-3 animate-pulse">
+                <div className="w-8 h-8 rounded-full bg-gray-100" />
+                <div className="h-10 bg-gray-50 rounded-[18px] w-2/3" />
+              </div>
+            )}
           </div>
         )}
       </div>

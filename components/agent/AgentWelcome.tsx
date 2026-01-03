@@ -1,7 +1,8 @@
 
 import React from 'react';
 
-const WelcomeAction = ({ title, sub, images }: { title: string, sub: string, images: string[] }) => (
+// Use React.FC to define the component props, which correctly handles the 'key' prop when mapping over actions and avoids type mismatch.
+const WelcomeAction: React.FC<{ title: string; sub: string; images: string[] }> = ({ title, sub, images }) => (
   <div className="lov-hover-card bg-[#F4F4F5] rounded-[24px] px-5 py-4 flex justify-between items-center cursor-pointer group mb-3 shadow-sm">
     <div className="flex-1 pr-3">
       <h4 className="text-[14px] font-bold text-black mb-0.5 tracking-tight">{title}</h4>

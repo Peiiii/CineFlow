@@ -18,7 +18,7 @@ const AppContent: React.FC = () => {
   return (
     <div className="flex h-screen w-screen bg-[#FFFFFF] overflow-hidden text-black">
       {/* 顶部导航 */}
-      <header className="fixed top-0 left-0 right-[400px] h-[100px] flex items-center justify-between px-16 z-40 pointer-events-none">
+      <header className="fixed top-0 left-0 right-[380px] h-[90px] flex items-center justify-between px-12 z-40 pointer-events-none">
         <ProjectHeader />
         <ZoomControls 
           zoom={zoom} 
@@ -38,11 +38,12 @@ const AppContent: React.FC = () => {
       <AgentPanel />
 
       {/* 极简页脚 */}
-      <footer className="fixed bottom-0 left-0 right-[400px] h-20 pointer-events-none flex items-center justify-end px-16 z-40 pb-6">
+      <footer className="fixed bottom-0 left-0 right-[380px] h-20 pointer-events-none flex items-center justify-end px-12 z-40 pb-6">
         <IconButton 
           variant="subtle"
           size="xl"
           rounded="14"
+          title="收起底部工作栏"
           className="pointer-events-auto"
           icon={
             <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3">
