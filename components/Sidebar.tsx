@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { usePresenter } from '../PresenterContext';
+import IconButton from './common/IconButton';
 
 const tools = [
   { id: 'cursor', title: '选择', icon: 'M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5' },
@@ -18,27 +19,30 @@ const Sidebar: React.FC = () => {
 
   return (
     <div className="fixed left-8 top-1/2 -translate-y-1/2 z-50">
-      <div className="bg-white rounded-full border border-gray-100/60 p-2.5 flex flex-col gap-4 shadow-[0_10px_40px_rgba(0,0,0,0.04)]">
+      <div className="bg-white rounded-full border border-gray-100/60 p-2 flex flex-col gap-3 shadow-[0_10px_40px_rgba(0,0,0,0.04)]">
         {tools.map((t) => (
-          <button
+          <IconButton
             key={t.id}
             title={t.title}
+            active={activeTool === t.id}
+            variant="sidebar"
+            size="lg" // 侧边栏稍大，更易点击
+            icon={
+              <svg 
+                className={`${t.id === 'play' ? 'w-3 h-3' : 'w-5 h-5'}`} 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24" 
+                strokeWidth={activeTool === t.id ? "2.5" : "1.8"}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d={t.icon} />
+              </svg>
+            }
             onClick={() => {
               setActiveTool(t.id);
               if (t.id === 'plus') workspaceManager.addAsset({});
             }}
-            className={`sidebar-tool icon-center ${activeTool === t.id ? 'active' : ''}`}
-          >
-            <svg 
-              className={`${t.id === 'play' ? 'w-3 h-3' : 'w-5 h-5'} pointer-events-none`} 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24" 
-              strokeWidth={activeTool === t.id ? "2.5" : "1.8"}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d={t.icon} />
-            </svg>
-          </button>
+          />
         ))}
       </div>
     </div>
