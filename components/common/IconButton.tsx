@@ -56,12 +56,28 @@ const IconButton: React.FC<IconButtonProps> = ({
     '14': "rounded-[14px]"
   };
 
-  // Tooltip 位置逻辑
-  const tooltipPos = {
-    top: "bottom-full mb-2 left-1/2 -translate-x-1/2",
-    bottom: "top-full mt-2 left-1/2 -translate-x-1/2",
-    left: "right-full mr-2 top-1/2 -translate-y-1/2",
-    right: "left-full ml-2 top-1/2 -translate-y-1/2"
+  // 精确的容器定位映射
+  const containerPos = {
+    top: "bottom-full left-1/2 -translate-x-1/2 mb-2",
+    bottom: "top-full left-1/2 -translate-x-1/2 mt-2",
+    left: "right-full top-1/2 -translate-y-1/2 mr-2",
+    right: "left-full top-1/2 -translate-y-1/2 ml-2"
+  };
+
+  // 动画进入方向映射
+  const entryAnim = {
+    top: "translate-y-1 group-hover:translate-y-0",
+    bottom: "-translate-y-1 group-hover:translate-y-0",
+    left: "translate-x-1 group-hover:translate-x-0",
+    right: "-translate-x-1 group-hover:translate-x-0"
+  };
+
+  // 箭头定位映射 (相对于黑盒)
+  const arrowPos = {
+    top: "top-full left-1/2 -translate-x-1/2 -mt-[3px]",
+    bottom: "bottom-full left-1/2 -translate-x-1/2 -mb-[3px]",
+    left: "left-full top-1/2 -translate-y-1/2 -ml-[3px]",
+    right: "right-full top-1/2 -translate-y-1/2 -mr-[3px]"
   };
 
   return (
@@ -81,22 +97,23 @@ const IconButton: React.FC<IconButtonProps> = ({
         {icon}
       </span>
 
-      {/* 自定义 Tooltip */}
+      {/* 增强型 Tooltip */}
       {title && (
         <div className={`
-          absolute ${tooltipPos[tooltipSide]}
-          px-2 py-1 bg-black text-white text-[10px] font-bold rounded-md
-          opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0
-          transition-all duration-200 pointer-events-none whitespace-nowrap z-[100]
-          shadow-xl
+          absolute ${containerPos[tooltipSide]}
+          z-[9999] pointer-events-none
+          opacity-0 group-hover:opacity-100
+          transition-all duration-200 ease-out
+          ${entryAnim[tooltipSide]}
         `}>
-          {title}
-          {/* 小三角 */}
-          <div className={`
-            absolute w-1.5 h-1.5 bg-black rotate-45
-            ${tooltipSide === 'top' ? 'top-full -mt-[3px] left-1/2 -translate-x-1/2' : ''}
-            ${tooltipSide === 'bottom' ? 'bottom-full -mb-[3px] left-1/2 -translate-x-1/2' : ''}
-          `} />
+          <div className="bg-black text-white text-[11px] font-bold px-2.5 py-1.5 rounded-lg shadow-xl shadow-black/20 whitespace-nowrap relative">
+            {title}
+            {/* 像素级精确的小箭头 */}
+            <div className={`
+              absolute w-2 h-2 bg-black rotate-45
+              ${arrowPos[tooltipSide]}
+            `} />
+          </div>
         </div>
       )}
     </button>
