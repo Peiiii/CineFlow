@@ -18,47 +18,65 @@
         overflow: hidden;
       }
       
-      /* 极致弥散阴影：这是 Lovart 风格的灵魂 */
-      .shadow-lov {
-        shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-      }
-      
-      .hover-shadow-lov:hover {
-        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08) !important;
+      /* 核心居中工具 - 解决图标歪斜 */
+      .icon-center {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
       }
 
-      /* 图标居中修正 */
-      .icon-center {
-        display: inline-flex;
+      /* 按钮基础 */
+      .lov-btn {
+        display: flex;
         align-items: center;
         justify-content: center;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        cursor: pointer;
+        user-select: none;
+      }
+      .lov-btn:active { transform: scale(0.92); }
+
+      /* 侧边栏按钮特有样式 */
+      .sidebar-tool {
+        width: 42px;
+        height: 42px;
+        border-radius: 9999px;
+        color: #A0A0A0;
+      }
+      .sidebar-tool.active {
+        background-color: #000000;
+        color: #FFFFFF;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+      }
+      .sidebar-tool:not(.active):hover {
+        background-color: #F2F2F2;
+        color: #000000;
       }
 
-      /* 隐藏滚动条但保留功能 */
-      .no-scrollbar::-webkit-scrollbar {
-        display: none;
+      /* 弥散阴影卡片 - 解决 Hover 没效果 */
+      .lov-hover-card {
+        transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+        z-index: 1;
       }
-      .no-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
+      .lov-hover-card:hover {
+        transform: translateY(-6px);
+        background-color: #EEEEF0;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08) !important;
+        z-index: 10;
       }
 
-      /* 画布背景点阵 */
+      /* 点阵背景 */
       .canvas-dots {
-        background-image: radial-gradient(#F0F0F0 1.5px, transparent 1.5px);
-        background-size: 34px 34px;
+        background-image: radial-gradient(#EFEFEF 1.5px, transparent 1.5px);
+        background-size: 36px 36px;
       }
 
-      /* 输入框重置 */
-      textarea {
-        resize: none !important;
-        outline: none !important;
-      }
+      /* 滚动条隐藏 */
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-      /* 卡片悬停提升 */
-      .lov-card-transition {
-        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      }
+      textarea { resize: none !important; outline: none !important; }
     </style>
   <script type="importmap">
 {

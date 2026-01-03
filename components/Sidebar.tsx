@@ -18,7 +18,7 @@ const Sidebar: React.FC = () => {
 
   return (
     <div className="fixed left-8 top-1/2 -translate-y-1/2 z-50">
-      <div className="bg-white rounded-full border border-gray-100/50 p-2.5 flex flex-col gap-3 shadow-[0_8px_30px_rgba(0,0,0,0.03)]">
+      <div className="bg-white rounded-full border border-gray-100/60 p-2.5 flex flex-col gap-4 shadow-[0_10px_40px_rgba(0,0,0,0.04)]">
         {tools.map((t) => (
           <button
             key={t.id}
@@ -27,13 +27,15 @@ const Sidebar: React.FC = () => {
               setActiveTool(t.id);
               if (t.id === 'plus') workspaceManager.addAsset({});
             }}
-            className={`w-10 h-10 icon-center rounded-full transition-all duration-200 group relative ${
-              activeTool === t.id 
-                ? 'bg-black text-white shadow-lg' 
-                : 'text-[#A0A0A0] hover:bg-[#F2F2F2] hover:text-black active:scale-90'
-            }`}
+            className={`sidebar-tool icon-center ${activeTool === t.id ? 'active' : ''}`}
           >
-            <svg className="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.8">
+            <svg 
+              className={`${t.id === 'play' ? 'w-3 h-3' : 'w-5 h-5'} pointer-events-none`} 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24" 
+              strokeWidth={activeTool === t.id ? "2.5" : "1.8"}
+            >
               <path strokeLinecap="round" strokeLinejoin="round" d={t.icon} />
             </svg>
           </button>
