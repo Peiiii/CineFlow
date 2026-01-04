@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 export type IconButtonVariant = 'ghost' | 'solid' | 'ai' | 'sidebar' | 'subtle';
 export type IconButtonSize = 'sm' | 'md' | 'lg' | 'xl';
@@ -30,6 +30,9 @@ const IconButton: React.FC<IconButtonProps> = ({
   disabled,
   tooltipSide
 }) => {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [realSide, setRealSide] = useState<'top' | 'bottom' | 'left' | 'right'>('top');
+
   const baseClasses = "lov-btn icon-center transition-all duration-300 select-none flex-shrink-0 group relative";
   
   const variants = {
@@ -56,10 +59,24 @@ const IconButton: React.FC<IconButtonProps> = ({
     '14': "rounded-[14px]"
   };
 
-  // 默认方向自适应逻辑
-  const effectiveSide = tooltipSide || (variant === 'sidebar' ? 'right' : 'top');
+  // 智能计算弹出方向
+  const updateDirection = () => {
+    if (!buttonRef.current) return;
+    const rect = buttonRef.current.getBoundingClientRect();
+    const defaultSide = tooltipSide || (variant === 'sidebar' ? 'right' : 'top');
+    
+    let side = defaultSide;
 
-  // 精确的容器定位映射
+    // 边界检测逻辑
+    if (side === 'top' && rect.top < 80) side = 'bottom';
+    if (side === 'bottom' && window.innerHeight - rect.bottom < 80) side = 'top';
+    if (side === 'left' && rect.left < 80) side = 'right';
+    if (side === 'right' && window.innerWidth - rect.right < 80) side = 'left';
+
+    setRealSide(side);
+  };
+
+  // 定位映射
   const containerPos = {
     top: "bottom-full left-1/2 -translate-x-1/2 mb-2.5",
     bottom: "top-full left-1/2 -translate-x-1/2 mt-2.5",
@@ -67,7 +84,6 @@ const IconButton: React.FC<IconButtonProps> = ({
     right: "left-full top-1/2 -translate-y-1/2 ml-2.5"
   };
 
-  // 动画进入方向映射
   const entryAnim = {
     top: "translate-y-1 group-hover:translate-y-0",
     bottom: "-translate-y-1 group-hover:translate-y-0",
@@ -75,7 +91,6 @@ const IconButton: React.FC<IconButtonProps> = ({
     right: "-translate-x-1 group-hover:translate-x-0"
   };
 
-  // 箭头定位映射 - 修复了 offset 逻辑
   const arrowStyles = {
     top: { top: '100%', left: '50%', transform: 'translateX(-50%) translateY(-50%) rotate(45deg)', marginTop: '-1px' },
     bottom: { bottom: '100%', left: '50%', transform: 'translateX(-50%) translateY(50%) rotate(45deg)', marginBottom: '-1px' },
@@ -85,6 +100,8 @@ const IconButton: React.FC<IconButtonProps> = ({
 
   return (
     <button
+      ref={buttonRef}
+      onMouseEnter={updateDirection}
       onClick={onClick}
       disabled={disabled}
       className={`
@@ -100,21 +117,19 @@ const IconButton: React.FC<IconButtonProps> = ({
         {icon}
       </span>
 
-      {/* 增强型 Tooltip */}
       {title && (
         <div className={`
-          absolute ${containerPos[effectiveSide]}
+          absolute ${containerPos[realSide]}
           z-[9999] pointer-events-none
           opacity-0 group-hover:opacity-100
           transition-all duration-200 ease-out
-          ${entryAnim[effectiveSide]}
+          ${entryAnim[realSide]}
         `}>
           <div className="bg-black text-white text-[11px] font-bold px-2.5 py-1.5 rounded-lg shadow-2xl shadow-black/40 whitespace-nowrap relative">
             {title}
-            {/* 像素级精确的小箭头 */}
             <div 
               className="absolute w-2 h-2 bg-black"
-              style={arrowStyles[effectiveSide]}
+              style={arrowStyles[realSide]}
             />
           </div>
         </div>

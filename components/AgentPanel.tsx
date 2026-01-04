@@ -18,9 +18,18 @@ const AgentPanel: React.FC = () => {
   }, [messages, loading]);
 
   return (
-    <div className="w-[380px] h-screen bg-white flex flex-col z-50 rounded-l-[32px] 
-      shadow-[-1px_0_0_rgba(0,0,0,0.05),-20px_0_80px_rgba(0,0,0,0.06),-5px_0_15px_rgba(0,0,0,0.02)] 
-      relative border-l border-gray-100 border-t border-b border-gray-50/50">
+    <div className="w-[380px] h-screen bg-[#FFFFFF] flex flex-col z-50 rounded-l-[32px] 
+      shadow-[
+        -1px_0_0_rgba(0,0,0,0.06),
+        -20px_0_80px_rgba(0,0,0,0.08),
+        -5px_0_15px_rgba(0,0,0,0.03)
+      ] 
+      relative 
+      border-l border-gray-200/80
+      ring-1 ring-black/[0.02]
+    ">
+      {/* 增强顶部边界感 */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gray-100/50 rounded-tl-[32px]" />
       
       <AgentHeader />
 
@@ -54,6 +63,9 @@ const AgentPanel: React.FC = () => {
         onInputChange={agentManager.updateInput} 
         onSend={agentManager.sendMessage} 
       />
+      
+      {/* 增强底部边界感 */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gray-100/30" />
     </div>
   );
 };
