@@ -28,7 +28,7 @@ const IconButton: React.FC<IconButtonProps> = ({
   rounded = 'full',
   size = 'md',
   disabled,
-  tooltipSide = 'top'
+  tooltipSide
 }) => {
   const baseClasses = "lov-btn icon-center transition-all duration-300 select-none flex-shrink-0 group relative";
   
@@ -56,12 +56,15 @@ const IconButton: React.FC<IconButtonProps> = ({
     '14': "rounded-[14px]"
   };
 
+  // 默认方向自适应逻辑
+  const effectiveSide = tooltipSide || (variant === 'sidebar' ? 'right' : 'top');
+
   // 精确的容器定位映射
   const containerPos = {
-    top: "bottom-full left-1/2 -translate-x-1/2 mb-2",
-    bottom: "top-full left-1/2 -translate-x-1/2 mt-2",
-    left: "right-full top-1/2 -translate-y-1/2 mr-2",
-    right: "left-full top-1/2 -translate-y-1/2 ml-2"
+    top: "bottom-full left-1/2 -translate-x-1/2 mb-2.5",
+    bottom: "top-full left-1/2 -translate-x-1/2 mt-2.5",
+    left: "right-full top-1/2 -translate-y-1/2 mr-2.5",
+    right: "left-full top-1/2 -translate-y-1/2 ml-2.5"
   };
 
   // 动画进入方向映射
@@ -72,12 +75,12 @@ const IconButton: React.FC<IconButtonProps> = ({
     right: "-translate-x-1 group-hover:translate-x-0"
   };
 
-  // 箭头定位映射 (相对于黑盒)
-  const arrowPos = {
-    top: "top-full left-1/2 -translate-x-1/2 -mt-[3px]",
-    bottom: "bottom-full left-1/2 -translate-x-1/2 -mb-[3px]",
-    left: "left-full top-1/2 -translate-y-1/2 -ml-[3px]",
-    right: "right-full top-1/2 -translate-y-1/2 -mr-[3px]"
+  // 箭头定位映射 - 修复了 offset 逻辑
+  const arrowStyles = {
+    top: { top: '100%', left: '50%', transform: 'translateX(-50%) translateY(-50%) rotate(45deg)', marginTop: '-1px' },
+    bottom: { bottom: '100%', left: '50%', transform: 'translateX(-50%) translateY(50%) rotate(45deg)', marginBottom: '-1px' },
+    left: { left: '100%', top: '50%', transform: 'translateY(-50%) translateX(-50%) rotate(45deg)', marginLeft: '-1px' },
+    right: { right: '100%', top: '50%', transform: 'translateY(-50%) translateX(50%) rotate(45deg)', marginRight: '-1px' }
   };
 
   return (
@@ -100,19 +103,19 @@ const IconButton: React.FC<IconButtonProps> = ({
       {/* 增强型 Tooltip */}
       {title && (
         <div className={`
-          absolute ${containerPos[tooltipSide]}
+          absolute ${containerPos[effectiveSide]}
           z-[9999] pointer-events-none
           opacity-0 group-hover:opacity-100
           transition-all duration-200 ease-out
-          ${entryAnim[tooltipSide]}
+          ${entryAnim[effectiveSide]}
         `}>
-          <div className="bg-black text-white text-[11px] font-bold px-2.5 py-1.5 rounded-lg shadow-xl shadow-black/20 whitespace-nowrap relative">
+          <div className="bg-black text-white text-[11px] font-bold px-2.5 py-1.5 rounded-lg shadow-2xl shadow-black/40 whitespace-nowrap relative">
             {title}
             {/* 像素级精确的小箭头 */}
-            <div className={`
-              absolute w-2 h-2 bg-black rotate-45
-              ${arrowPos[tooltipSide]}
-            `} />
+            <div 
+              className="absolute w-2 h-2 bg-black"
+              style={arrowStyles[effectiveSide]}
+            />
           </div>
         </div>
       )}

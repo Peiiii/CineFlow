@@ -18,7 +18,10 @@ const AgentPanel: React.FC = () => {
   }, [messages, loading]);
 
   return (
-    <div className="w-[380px] h-screen bg-white flex flex-col z-50 rounded-l-[32px] shadow-[-20px_0_60px_rgba(0,0,0,0.02)] relative border-l border-gray-50">
+    <div className="w-[380px] h-screen bg-white flex flex-col z-50 rounded-l-[32px] 
+      shadow-[-1px_0_0_rgba(0,0,0,0.05),-20px_0_80px_rgba(0,0,0,0.06),-5px_0_15px_rgba(0,0,0,0.02)] 
+      relative border-l border-gray-100 border-t border-b border-gray-50/50">
+      
       <AgentHeader />
 
       <div className="flex-1 overflow-y-auto no-scrollbar px-5 pb-4" ref={scrollRef}>
